@@ -2,7 +2,9 @@ import React from "react";
 import "./MyPosts";
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import { type } from "@testing-library/user-event/dist/type";
+import { addPostActionCreator, updateNewPostTextActionCreator } from "../../../redux/profile-reducer";
+
+
 
 const MyPosts = (props) => {
   // let posts = [
@@ -20,7 +22,7 @@ const MyPosts = (props) => {
   let addPost = () => {
 
     // let text = newPostElement.current.value
-    props.dispatch({type: 'ADD-POST'})
+    props.dispatch(addPostActionCreator())
    
     
   }
@@ -28,7 +30,7 @@ const MyPosts = (props) => {
   let onPostChange = () => {
 // debugger
     let text = newPostElement.current.value
-    let action = {type: 'APDATE-NEW-POST-TEXT', newText: text}
+    let action = updateNewPostTextActionCreator(text)
     props.dispatch(action)
   }
 

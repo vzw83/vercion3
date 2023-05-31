@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Dialogs from "./components/Dialogs/Dialogs";
 import Header from "./components/Header/Header";
@@ -7,7 +7,8 @@ import Profile from "./components/Profile/Profile";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
-import { addPost } from "./redux/State";
+// import store from "./redux/State";
+// import { addPost } from "./redux/State";
 
 const App = (props) => {
   // let posts = [
@@ -28,7 +29,8 @@ const App = (props) => {
             path="/dialogs/*"
             element={
               <Dialogs
-                state={props.state.dialogsPage}
+                store={props.store}
+                // state={props.state.dialogsPage}
                 // messages={props.state.dialogsPage.messages}
               />
             }

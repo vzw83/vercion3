@@ -2,6 +2,7 @@ import React from "react";
 import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import { updateNewMessageBodyCreator, sendMessageCreator } from "../../redux/dialogs-reducer";
 
 const Dialogs = (props) => {
   // let dialogs = [
@@ -20,28 +21,44 @@ const Dialogs = (props) => {
   //   { id: 5, message: "YO" },
   // ];
 
-  let dialogsElement = props.state.dialogs.map((dialog) => (
+  let state = props.store.getState().dialogsPage
+
+  let dialogsElement = state.dialogs.map((dialog) => (
     <DialogItem name={dialog.name} id={dialog.id} />
   ));
 
-  let messagesElement = props.state.messages.map((message) => (
+  let messagesElement = state.messages.map((message) => (
     <Message message={message.message} />
   ));
-  let newMassageElement = React.createRef()
 
-  let newMessage = () => {
-     let text = newMassageElement.current.value;
-     alert(text)   
+  let newMessageBody = state.newMessageBody;
+
+  // let newMassageElement = React.createRef();
+
+  // let newMessage = () => {
+  //   let text = newMassageElement.current.value;
+  //   alert(text);
+  // };
+
+  let onSendMessageClick = () => {
+    props.store.dispatch(sendMessageCreator())
+  }
+  let onNewMessageChange = (e) => {
+    let body = e.target.value
+    props.store.dispatch(updateNewMessageBodyCreator(body))
   }
   return (
     <div className={s.dialogs}>
-       <div>
-        <textarea placeholder="вводи))" ref={newMassageElement}></textarea>
-        <button onClick={newMessage} >добавить</button>
-      </div>
-       
+      
+
       <div className={s.dialogsItems}>{dialogsElement}</div>
-      <div className={s.messages}>{messagesElement}</div>
+      <div className={s.messages}>
+        <div>{messagesElement}</div>
+        <div><textarea value={newMessageBody}
+                       onChange={onNewMessageChange}
+                       placeholder="вводи))"></textarea></div>
+        <div><button onClick={onSendMessageClick}>добавить</button></div>
+      </div>
     </div>
   );
 };
